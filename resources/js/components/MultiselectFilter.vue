@@ -1,10 +1,10 @@
 <template>
-  <div class="outl1ne-multiselect-filter o1-pt-2 o1-pb-3 o1-relative">
-    <h3 class="o1-px-3 o1-text-xs o1-uppercase o1-font-bold o1-tracking-wide">
+  <div class="pt-2 pb-3">
+    <h3 class="px-3 text-xs uppercase font-bold tracking-wide">
       <span>{{ filter.name }}</span>
     </h3>
 
-    <div class="o1-pt-2 o1-px-2 o1-flex o1-relative">
+    <div class="p-2">
       <multiselect
         @input="handleChange"
         @close="handleClose"
@@ -31,6 +31,7 @@
         selectedLabel=""
         deselectLabel=""
         deselectGroupLabel=""
+        class="search-multiselect"
       >
         <template #maxElements>
           {{ __('novaMultiselectFilter.maxElements', { max: String(filter.max || '') }) }}
@@ -55,12 +56,11 @@
 <script>
 import HandlesFilterValue from '../mixins/HandlesFilterValue';
 import Multiselect from 'vue-multiselect/src/Multiselect';
-import Filterable from 'laravel-nova-filterable';
-import InteractsWithQueryString from 'laravel-nova-interacts-with-query-string';
+import Filterable from '../../../vendor/laravel/nova/resources/js/mixins/Filterable';
 
 export default {
   components: { Multiselect },
-  mixins: [Filterable, InteractsWithQueryString, HandlesFilterValue],
+  mixins: [Filterable, HandlesFilterValue],
   props: ['resourceName', 'resourceId', 'filterKey'],
 
   data: () => ({
@@ -154,9 +154,9 @@ export default {
           parentScrollTop +
           el.offsetTop;
 
-        ms.$refs.list.style.position = 'fixed';
+        ms.$refs.list.style.position = 'relative';
         ms.$refs.list.style.width = `${el.clientWidth}px`;
-        ms.$refs.list.style.top = `${top}px`;
+        // ms.$refs.list.style.top = `${top}px`;
         ms.$refs.list.style['border-radius'] = '0 0 5px 5px';
       };
 
@@ -465,8 +465,7 @@ $red500: #ef4444;
     min-height: 16px;
     line-height: 16px;
     cursor: default;
-
-    color: #475569;
+    color: #9ca3af;
 
     .dark & {
       color: #64748b;

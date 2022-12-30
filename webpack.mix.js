@@ -1,25 +1,20 @@
-let mix = require('laravel-mix');
-let path = require('path');
-let postcss = require('postcss-import');
-let tailwindcss = require('tailwindcss');
+let mix = require('laravel-mix')
+const path = require('path')
+require('./nova.mix')
 
 mix
   .setPublicPath('dist')
   .js('resources/js/entry.js', 'js')
   .vue({ version: 3 })
-  .webpackConfig({
-    externals: {
-      vue: 'Vue',
-    },
-    output: {
-      uniqueName: 'outl1ne/nova-multiselect-filter',
-    },
-  })
-  .postCss('resources/css/entry.css', 'dist/css/', [postcss(), tailwindcss('tailwind.config.js')])
+  .css('resources/css/entry.css', 'css')
+  .nova('outl1ne/nova-multiselect-filter')
   .alias({
-    'laravel-nova-filterable': path.join(__dirname, 'vendor/laravel/nova/resources/js/mixins/Filterable.js'),
-    'laravel-nova-interacts-with-query-string': path.join(
-      __dirname,
-      'vendor/laravel/nova/resources/js/mixins/InteractsWithQueryString.js'
-    ),
+    '@': 'vendor/laravel/nova/resources/js/',
+  })
+  .webpackConfig({
+    resolve: {
+      alias: {
+        'laravel-nova': path.resolve(__dirname, './node_modules/laravel-nova/dist/index.js'),
+      },
+    },
   });
